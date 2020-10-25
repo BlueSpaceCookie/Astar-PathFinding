@@ -2,9 +2,29 @@ from node import Node
 from connection import Connection
 from reader import read
 
-import sys
 
-def search(nodes, start, end):
+def zeroHeuristic(currentNode, endNode):
+    return 0
+
+def xHeuristic(currentNode, endNode):
+    return abs(int(endNode.position[0]) - int(currentNode.position[0]))
+
+def yHeuristic(currentNode, endNode):
+    return abs(int(endNode.position[1]) - int(currentNode.position[1]))
+
+def manhattanHeuristic(currentNode, endNode):
+    xDistance = abs(int(endNode.position[0]) - int(currentNode.position[0]))
+    yDistance = abs(int(endNode.position[1]) - int(currentNode.position[1]))
+
+    return xDistance + yDistance
+
+def asTheCrowFliesHeuristic(currentNode, endNode):
+    xDistance = (int(endNode.position[0]) - int(currentNode.position[0]))**2
+    yDistance = (int(endNode.position[1]) - int(currentNode.position[1]))**27
+
+    return xDistance + yDistance
+
+def search(nodes, start, end, heuristic = xHeuristic):
     frontier = []
     history = []
     endNode = nodes[end]
@@ -21,10 +41,10 @@ def search(nodes, start, end):
 
         children = node.connections
         for child in children:
-            
             currentNode = nodes[child.destination]
+
             currentNode.g = child.distance
-            currentNode.h = abs(int(endNode.position[0]) - int(currentNode.position[0]))
+            currentNode.h = heuristic(currentNode, endNode)
             currentNode.f = int(currentNode.g) + int(currentNode.h)
 
             if(currentNode in history):
@@ -36,18 +56,16 @@ def search(nodes, start, end):
             elif(currentNode in frontier):
                 frontierNode = frontier[frontier.index(currentNode)]
                 if(currentNode.g < frontierNode.g):
-                    frontier[frontier.index(currentNode)] = currentNode
+                    frontierNode = currentNode
             
             
         frontier.sort(key=lambda x: x.f)
         history.append(node)
                 
 if __name__ == "__main__":
-
-
     nodes = read()
-    x = search(nodes, "Copenhagen", "Genoa")
+    road = search(nodes, "Copenhagen", "Belgrade", xHeuristic)
 
-    print(x)
+    print(road)
 
     

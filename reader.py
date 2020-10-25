@@ -4,8 +4,8 @@ from graphviz import Digraph
 
 def read():
     nodes = {}
-    positionsFile = open("positions.txt", "r")
-    connectionsFile = open("connections.txt", "r")
+    positionsFile = open("res/positions.txt", "r")
+    connectionsFile = open("res/connections.txt", "r")
 
     cities = positionsFile.read().split("\n")
     connections = connectionsFile.read().split("\n")
@@ -36,6 +36,7 @@ def makeGraph(nodes):
 
 if __name__ == "__main__":
     nodes = read()
+    makeGraph(nodes)
 
 
     
