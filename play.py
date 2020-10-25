@@ -20,7 +20,7 @@ def manhattanHeuristic(currentNode, endNode):
 
 def asTheCrowFliesHeuristic(currentNode, endNode):
     xDistance = (int(endNode.position[0]) - int(currentNode.position[0]))**2
-    yDistance = (int(endNode.position[1]) - int(currentNode.position[1]))**27
+    yDistance = (int(endNode.position[1]) - int(currentNode.position[1]))**2
 
     return xDistance + yDistance
 
@@ -64,7 +64,7 @@ def search(nodes, start, end, heuristic = xHeuristic):
                 
 if __name__ == "__main__":
     nodes = read()
-    road = search(nodes, "Copenhagen", "Belgrade", xHeuristic)
+    road = search(nodes, "Copenhagen", "Belgrade", asTheCrowFliesHeuristic)
 
     print(road)
 
