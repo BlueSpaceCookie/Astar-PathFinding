@@ -20,7 +20,7 @@ def read():
                 node.addConnection(link)
             elif(node.name == cityConnection[1]):
                 link = Connection(cityConnection[0], cityConnection[2])
-                node.addConnection(link)
+                node.addConnection(link)      
         nodes[node.name] = node
     return nodes
 
@@ -31,7 +31,7 @@ def makeGraph(nodes):
         for connection in node.connections:
             graph.edge(node.name, connection.destination, connection.distance)
     
-    graph.render("test.gv", view = True)
+    graph.render("graph.gv", view = True)
 
 
 if __name__ == "__main__":
